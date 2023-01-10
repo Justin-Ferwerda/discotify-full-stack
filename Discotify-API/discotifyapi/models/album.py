@@ -11,4 +11,4 @@ class Album(models.Model):
     release_date = models.DateField()
     spotify = models.CharField(max_length=50)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_albums')

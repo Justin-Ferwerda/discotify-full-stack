@@ -1,5 +1,3 @@
-// Context API Docs: https://beta.reactjs.org/learn/passing-data-deeply-with-context
-
 import React, {
   createContext,
   useContext,
@@ -12,7 +10,7 @@ import { checkUser, registerUser } from '../auth';
 
 const AuthContext = createContext();
 
-AuthContext.displayName = 'AuthContext'; // Context object accepts a displayName string property. React DevTools uses this string to determine what to display for the context. https://reactjs.org/docs/context.html#contextdisplayname
+AuthContext.displayName = 'AuthContext';
 
 const AuthProvider = (props) => {
   const [user, setUser] = useState(null);
@@ -38,7 +36,7 @@ const AuthProvider = (props) => {
         setOAuthUser(fbUser);
         checkUser(fbUser.uid).then((userInfo) => {
           let userObj = {};
-          if (userInfo.valid === false) {
+          if (!userInfo.valid) {
             const userCreate = {
               uid: fbUser.uid,
               name: fbUser.displayName,

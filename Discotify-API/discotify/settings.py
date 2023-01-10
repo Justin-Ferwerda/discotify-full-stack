@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'discotify',
     'corsheaders',
     'rest_framework',
+    'discotifyapi',
 ]
 
 CORS_ORIGIN_WHITELIST = (

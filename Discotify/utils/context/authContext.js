@@ -8,7 +8,7 @@ import React, {
   useState,
 } from 'react';
 import { firebase } from '../client';
-import { getUser, addUser } from '../../api/userData';
+import { checkUser, registerUser } from '../auth';
 
 const AuthContext = createContext();
 
@@ -16,48 +16,57 @@ AuthContext.displayName = 'AuthContext'; // Context object accepts a displayName
 
 const AuthProvider = (props) => {
   const [user, setUser] = useState(null);
+  const [oAuthUser, setOAuthUser] = useState(null);
 
   const date = () => {
-    const d = new Date();
-    const dateValue = d.toLocaleString();
-    return dateValue;
+    let now = new Date();
+    const offset = now.getTimezoneOffset();
+    now = new Date(now.getTime() - (offset * 60 * 1000));
+    return now.toISOString().split('T')[0];
   };
 
-  // there are 3 states for the user:
-  // null = application initial state, not yet loaded
-  // false = user is not logged in, but the app has loaded
-  // an object/value = user is logged in
+  const updateUser = useMemo(
+    () => (uid) => checkUser(uid).then((gamerInfo) => {
+      setUser({ fbUser: oAuthUser, ...gamerInfo });
+    }),
+    [oAuthUser],
+  );
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(async (fbUser) => {
       if (fbUser) {
-        await getUser(fbUser.uid).then(async (response) => {
-          if (!response) {
+        setOAuthUser(fbUser);
+        await checkUser(fbUser.uid).then(async (userInfo) => {
+          let userObj = {};
+          if ('null' in userInfo) {
             const userCreate = {
               uid: fbUser.uid,
-              userName: fbUser.displayName,
-              userImage: fbUser.photoURL,
+              name: fbUser.displayName,
+              image: fbUser.photoURL,
               memberSince: date(),
             };
-            await addUser(userCreate).then(() => setUser(fbUser));
+            await registerUser(userCreate).then((userObject) => {
+              userObj = userObject;
+            });
           } else {
-            setUser(fbUser);
+            userObj = userInfo;
           }
+          setUser(userObj);
         });
       } else {
+        setOAuthUser(false);
         setUser(false);
       }
-    }); // creates a single global listener for auth state changed
+    });
   }, []);
 
-  const value = useMemo( // https://reactjs.org/docs/hooks-reference.html#usememo
+  const value = useMemo(
     () => ({
       user,
-      userLoading: user === null,
-      // as long as user === null, will be true
-      // As soon as the user value !== null, value will be false
+      updateUser,
+      userLoading: user === null || oAuthUser === null,
     }),
-    [user],
+    [user, oAuthUser, updateUser],
   );
 
   return <AuthContext.Provider value={value} {...props} />;

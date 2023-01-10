@@ -6,5 +6,5 @@ from.album import Album
 class Wishlist(models.Model):
     """wishlist class"""
 
-    album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='user_wishlist')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    album = models.ForeignKey(Album, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_wishlist')

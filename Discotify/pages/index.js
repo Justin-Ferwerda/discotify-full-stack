@@ -1,12 +1,14 @@
 import { Button, Form } from 'react-bootstrap';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { spotify, spotifySearch } from '../api/spotifyData';
+import { useAuth } from '../utils/context/authContext';
 
 function Home() {
   const [formInput, setFormInput] = useState({});
   const router = useRouter();
+  const { user } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,6 +17,10 @@ function Home() {
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    console.warn(user);
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();

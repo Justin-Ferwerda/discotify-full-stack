@@ -33,19 +33,19 @@ const AuthProvider = (props) => {
   );
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(async (fbUser) => {
+    firebase.auth().onAuthStateChanged((fbUser) => {
       if (fbUser) {
         setOAuthUser(fbUser);
-        await checkUser(fbUser.uid).then(async (userInfo) => {
+        checkUser(fbUser.uid).then((userInfo) => {
           let userObj = {};
-          if ('null' in userInfo) {
+          if (userInfo.valid === false) {
             const userCreate = {
               uid: fbUser.uid,
               name: fbUser.displayName,
               image: fbUser.photoURL,
               memberSince: date(),
             };
-            await registerUser(userCreate).then((userObject) => {
+            registerUser(userCreate).then((userObject) => {
               userObj = userObject;
             });
           } else {

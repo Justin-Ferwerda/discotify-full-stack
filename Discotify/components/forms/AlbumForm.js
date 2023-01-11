@@ -23,16 +23,17 @@ function AlbumForm({ obj }) {
       ...prevState,
       [name]: value,
     }));
+    console.warn(formInput);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (obj.albumFirebaseKey) {
-      updateAlbum(formInput, formInput.albumFirebaseKey)
+    if (obj.id) {
+      updateAlbum(formInput)
         .then(() => router.push(`/collection/${user.uid}`));
     } else {
       const payload = {
-        ...formInput, uid: user.uid,
+        ...formInput,
       };
       createAlbum(payload).then(() => router.push(`/collection/${user.uid}`));
     }
@@ -42,7 +43,7 @@ function AlbumForm({ obj }) {
     <div>
       <Form onSubmit={handleSubmit}>
         <h2 className="text-black mt-5">{
-          obj.albumFirebaseKey ? 'Update' : 'Add'
+          obj.id ? 'Update' : 'Add'
 } Album
         </h2>
         <FloatingLabel controlId="floatingInput1" label="Artist Name" className="mb-3">
@@ -61,13 +62,13 @@ function AlbumForm({ obj }) {
           <Form.Select aria-label="Genre" name="genre" onChange={handleChange} className="mb-3" value={formInput?.genre} required>
             <option value="">Select a Genre</option>
             {genres?.map((genre) => (
-              <option key={genre.label} value={genre.label}>
+              <option key={genre.label} value={genre.id}>
                 {genre.label}
               </option>
             ))}
           </Form.Select>
         </FloatingLabel>
-        <Button className="add-album-btn" type="submit">{obj.albumFirebaseKey ? 'Update' : 'Add'} Album</Button>
+        <Button className="add-album-btn" type="submit">{obj.id ? 'Update' : 'Add'} Album</Button>
       </Form>
     </div>
   );
@@ -75,7 +76,7 @@ function AlbumForm({ obj }) {
 
 AlbumForm.propTypes = {
   obj: PropTypes.shape({
-    albumFirebaseKey: PropTypes.string,
+    id: PropTypes.number,
     genre: PropTypes.string,
   }),
 };

@@ -1,12 +1,12 @@
-import axios from 'axios';
 import { clientCredentials } from '../utils/client';
 
 const dbUrl = clientCredentials.databaseURL;
 
 const getGenres = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/genres.json`)
-    .then((response) => resolve(Object.values(response.data)))
-    .catch((error) => reject(error));
+  fetch(`${dbUrl}/genres`)
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
 });
 
 export default getGenres;

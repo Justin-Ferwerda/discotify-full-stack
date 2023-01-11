@@ -3,11 +3,13 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { getAlbum, spotify } from '../../../api/spotifyData';
 import AlbumForm from '../../../components/forms/AlbumForm';
+import { useAuth } from '../../../utils/context/authContext';
 
 export default function EditPlayer() {
   const [editItem, setEditItem] = useState({});
   const router = useRouter();
   const { spotifyId } = router.query;
+  const { user } = useAuth();
 
   const getAlbumInfo = async () => {
     const token = await spotify();
@@ -19,6 +21,7 @@ export default function EditPlayer() {
         recordImage: response.images[1].url,
         spotifyId,
         trackList: response.tracks.items,
+        userId: user.id,
       };
       setEditItem(object);
     });

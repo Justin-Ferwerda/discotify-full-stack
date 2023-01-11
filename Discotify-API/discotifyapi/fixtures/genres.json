@@ -1,0 +1,9 @@
+[
+  {
+    "model": "discotifyapi.genre",
+    "pk": 1,
+    "fields": {
+      "label": "hip-hop"
+    }
+  }
+]

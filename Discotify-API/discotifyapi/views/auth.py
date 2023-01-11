@@ -2,6 +2,7 @@
 from discotifyapi.models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from discotifyapi.serializers import UserSerializer
 
 
 @api_view(['POST'])
@@ -17,15 +18,8 @@ def check_user(request):
     try:
         user = User.objects.get(uid=uid)
 
-        data = {
-            'id': user.id,
-            'uid': user.uid,
-            'member_since': user.member_since,
-            'name': user.name,
-            'image': user.image
-
-        }
-        return Response(data)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
     except:
         data = { 'valid': False }
         return Response(data)
@@ -44,12 +38,7 @@ def register_user(request):
         member_since = request.data['member_since']
     )
 
-    data = {
-            'id': user.id,
-            'uid': user.uid,
-            'member_since': user.member_since,
-            'name': user.name,
-            'image': user.image
-
-        }
-    return Response(data)
+    new_user = User.objects.get(uid=user.uid)
+    
+    serializer = UserSerializer(new_user)
+    return Response(serializer.data)

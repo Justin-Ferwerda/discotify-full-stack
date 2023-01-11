@@ -3,13 +3,16 @@ import { clientCredentials } from '../utils/client';
 
 const dbUrl = clientCredentials.databaseURL;
 
-const createAlbum = (albumObj) => new Promise((resolve, reject) => {
-  axios.post(`${dbUrl}/albums.json`, albumObj)
-    .then((response) => {
-      const payload = { albumFirebaseKey: response.data.name };
-      axios.patch(`${dbUrl}/albums/${response.data.name}.json`, payload)
-        .then((patchResponse) => resolve(patchResponse.data));
-    }).catch(reject);
+const createAlbum = (payload) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/albums`, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+    headers: {
+      'content-type': 'application/json',
+    },
+  })
+    .then((response) => resolve(response.json()))
+    .catch((error) => reject(error));
 });
 
 const getAlbums = () => new Promise((resolve, reject) => {

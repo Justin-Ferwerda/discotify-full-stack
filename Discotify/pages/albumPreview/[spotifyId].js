@@ -24,7 +24,7 @@ function AlbumPreview() {
   const addWishlist = () => {
     const albumToAdd = albums.filter((album) => album.spotifyId === spotifyId);
     const payload = {
-      id: albumToAdd.id,
+      albumId: albumToAdd.id,
       userId: user.id,
     };
     createWishlist(payload);
@@ -34,7 +34,6 @@ function AlbumPreview() {
 
   useEffect(() => {
     setState();
-    console.warn(albums);
   }, []);
 
   return (

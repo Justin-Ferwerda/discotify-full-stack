@@ -3,13 +3,27 @@ import { clientCredentials } from '../utils/client';
 
 const dbUrl = clientCredentials.databaseURL;
 
-const createWishlist = (wishListObj) => new Promise((resolve, reject) => {
-  axios.post(`${dbUrl}/wishlist.json`, wishListObj)
-    .then((response) => {
-      const payload = { firebaseKey: response.data.name };
-      axios.patch(`${dbUrl}/wishlist/${response.data.name}.json`, payload)
-        .then((patchResponse) => resolve(patchResponse.data));
-    }).catch(reject);
+const createWishlist = (wish) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/wishlist`, {
+    method: 'POST',
+    body: JSON.stringify(wish),
+    headers: {
+      'content-type': 'application/json',
+    },
+  })
+    .then((response) => resolve(response.json()))
+    .catch((error) => reject(error));
+});
+
+const deleteWish = (id) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/wishlist/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'content-type': 'application/json',
+    },
+  })
+    .then(resolve)
+    .catch(reject);
 });
 
 const getUserWishlist = (uid) => new Promise((resolve, reject) => {
@@ -34,12 +48,6 @@ const getWishByFirebaseKey = (albumFirebaseKey) => new Promise((resolve, reject)
       }
     })
     .catch((error) => reject(error));
-});
-
-const deleteWish = (firebaseKey) => new Promise((resolve, reject) => {
-  axios.delete(`${dbUrl}/wishlist/${firebaseKey}.json`)
-    .then(resolve)
-    .catch(reject);
 });
 
 export {

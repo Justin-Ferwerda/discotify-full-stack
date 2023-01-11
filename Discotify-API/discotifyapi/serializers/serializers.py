@@ -38,6 +38,8 @@ class UserSerializer(ModelSerializer):
         fields = ('id', 'uid', 'member_since', 'name', 'image', 'albums', 'wishlist', 'trades', 'trade_requests')
         depth = 1
 
+
+
 class GenreSerializer(ModelSerializer):
     """genre serializer"""
 

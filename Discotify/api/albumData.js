@@ -19,20 +19,6 @@ const getAlbums = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const updateAlbum = (albumObject, albumFirebaseKey) => new Promise((resolve, reject) => {
-  axios.patch(`${dbUrl}/albums/${albumFirebaseKey}.json`, albumObject)
-    .then(() => {
-      getUserAlbums(albumObject.uid).then(resolve);
-    }).catch(reject);
-});
-
-const deleteSingleAlbum = (firebaseKey) => new Promise((resolve, reject) => {
-  axios.delete(`${dbUrl}/albums/${firebaseKey}.json`)
-    .then(() => {
-      getUserAlbums(firebaseKey).then((albumsArray) => resolve(albumsArray));
-    }).catch((error) => reject(error));
-});
-
 const getSingleAlbum = (albumFirebaseKey) => new Promise((resolve, reject) => {
   axios.get(`${dbUrl}/albums/${albumFirebaseKey}.json`)
     .then((response) => resolve(response.data))
@@ -40,5 +26,5 @@ const getSingleAlbum = (albumFirebaseKey) => new Promise((resolve, reject) => {
 });
 
 export {
-  createAlbum, updateAlbum, getUserAlbums, deleteSingleAlbum, getSingleAlbum, getAlbums,
+  createAlbum, getSingleAlbum, getAlbums,
 };

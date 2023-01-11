@@ -12,11 +12,10 @@ def snake_case_to_camel_case(response_list):
 
     return response_list
 
-def camel_case_to_snake_case(response_list):
+def camel_case_to_snake_case(data):
     """changes camel case to snake case for BE"""
-    for obj in response_list:
-        for i in list(obj):
-            index = ''.join(['_'+c.lower() if c.isupper() else c for c in i]).lstrip('_')
-            obj[index] = obj.pop(i)
+    for i in list(data):
+        index = ''.join(['_'+c.lower() if c.isupper() else c for c in i]).lstrip('_')
+        data[index] = data.pop(i)
 
-    return response_list
+    return data

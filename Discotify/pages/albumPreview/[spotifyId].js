@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import Head from 'next/head';
-import { getAlbumBySpotifyId, getAlbums } from '../../api/albumData';
+import { getAlbums } from '../../api/albumData';
 import SpotifyPlayer from '../../components/SpotifyPlayer';
 import { useAuth } from '../../utils/context/authContext';
 import { createWishlist } from '../../api/wishListData';
@@ -22,20 +22,19 @@ function AlbumPreview() {
   };
 
   const addWishlist = () => {
-    getAlbumBySpotifyId(spotifyId).then((album) => {
-      const payload = {
-        albumFirebaseKey: album.albumFirebaseKey,
-        uid: user.uid,
-      };
-
-      createWishlist(payload);
-      window.confirm(`added ${album.albumName} by ${album.artistName} to your wishlist!`);
-      router.push('/');
-    });
+    const albumToAdd = albums.filter((album) => album.spotifyId === spotifyId);
+    const payload = {
+      id: albumToAdd.id,
+      userId: user.id,
+    };
+    createWishlist(payload);
+    window.confirm(`added ${albumToAdd.albumName} by ${albumToAdd.artistName} to your wishlist!`);
+    router.push('/');
   };
 
   useEffect(() => {
     setState();
+    console.warn(albums);
   }, []);
 
   return (

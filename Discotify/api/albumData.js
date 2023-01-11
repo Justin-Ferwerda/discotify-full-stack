@@ -13,25 +13,10 @@ const createAlbum = (albumObj) => new Promise((resolve, reject) => {
 });
 
 const getAlbums = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/albums.json`)
-    .then((response) => {
-      if (response.data) {
-        resolve(Object.values(response.data));
-      } else {
-        resolve([]);
-      }
-    }).catch((error) => reject(error));
-});
-
-const getUserAlbums = (uid) => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/albums.json?orderBy="uid"&equalTo="${uid}"`)
-    .then((response) => {
-      if (response.data) {
-        resolve(Object.values(response.data));
-      } else {
-        resolve([]);
-      }
-    }).catch((error) => reject(error));
+  fetch(`${dbUrl}/albums`)
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
 });
 
 const updateAlbum = (albumObject, albumFirebaseKey) => new Promise((resolve, reject) => {
@@ -54,12 +39,6 @@ const getSingleAlbum = (albumFirebaseKey) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const getAlbumBySpotifyId = (spotifyId) => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/albums.json?orderBy="spotifyId"&equalTo="${spotifyId}"`)
-    .then((response) => resolve(Object.values(response.data).shift()))
-    .catch((error) => reject(error));
-});
-
 export {
-  createAlbum, updateAlbum, getUserAlbums, deleteSingleAlbum, getSingleAlbum, getAlbums, getAlbumBySpotifyId,
+  createAlbum, updateAlbum, getUserAlbums, deleteSingleAlbum, getSingleAlbum, getAlbums,
 };

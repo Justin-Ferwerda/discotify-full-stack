@@ -2,12 +2,20 @@
 from rest_framework.serializers import ModelSerializer
 from discotifyapi.models import Album, Trade, Wishlist, User, Genre, Track
 
+class TrackSerializer(ModelSerializer):
+    """track serializer"""
+
+    class Meta:
+        model = Track
+        fields = ('id', 'name', 'album', 'number')
+
 class AlbumSerializer(ModelSerializer):
     """Album Serializer"""
+    tracks = TrackSerializer(many=True)
 
     class Meta:
         model = Album
-        fields = ('id', 'artist_name', 'album_name', 'record_image', 'release_date', 'spotify', 'genre', 'user')
+        fields = ('id', 'artist_name', 'album_name', 'record_image', 'release_date', 'spotify', 'genre', 'user', 'tracks')
         depth = 1
 
 class TradeSerializer(ModelSerializer):
@@ -46,11 +54,3 @@ class GenreSerializer(ModelSerializer):
     class Meta:
         model = Genre
         fields = ('id', 'label')
-
-class TrackSerializer(ModelSerializer):
-    """track serializer"""
-
-    class Meta:
-        model = Track
-        fields = ('id', 'name', 'album', 'number')
-        depth = 1

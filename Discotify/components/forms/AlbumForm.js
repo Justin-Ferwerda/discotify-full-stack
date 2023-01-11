@@ -54,15 +54,15 @@ function AlbumForm({ obj }) {
         </FloatingLabel>
 
         <FloatingLabel controlId="floatingInput3" label="Release Date" className="mb-3">
-          <Form.Control type="text" placeholder="Release Date" name="release_date" value={formInput?.release_date} onChange={handleChange} required />
+          <Form.Control type="text" placeholder="Release Date" name="release_date" value={formInput?.releaseDate} onChange={handleChange} required />
         </FloatingLabel>
 
         <FloatingLabel controlId="floatingSelect" label="Category">
           <Form.Select aria-label="Genre" name="genre" onChange={handleChange} className="mb-3" value={formInput?.genre} required>
             <option value="">Select a Genre</option>
             {genres?.map((genre) => (
-              <option key={genre.genreName} value={genre.genreName}>
-                {genre.genreName}
+              <option key={genre.label} value={genre.label}>
+                {genre.label}
               </option>
             ))}
           </Form.Select>

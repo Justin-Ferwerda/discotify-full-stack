@@ -36,7 +36,7 @@ const AuthProvider = (props) => {
         setOAuthUser(fbUser);
         checkUser(fbUser.uid).then((userInfo) => {
           let userObj = {};
-          if (!userInfo.valid) {
+          if (userInfo.valid === false) {
             const userCreate = {
               uid: fbUser.uid,
               name: fbUser.displayName,

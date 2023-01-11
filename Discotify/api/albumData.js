@@ -28,6 +28,14 @@ const getSingleAlbum = (albumFirebaseKey) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const deleteAlbum = (id) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/albums/${id}`, {
+    method: 'DELETE',
+  })
+    .then(resolve)
+    .catch(reject);
+});
+
 export {
-  createAlbum, getSingleAlbum, getAlbums,
+  createAlbum, getSingleAlbum, getAlbums, deleteAlbum,
 };

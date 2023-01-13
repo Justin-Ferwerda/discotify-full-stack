@@ -51,7 +51,7 @@ export default function MenuAppBar() {
               <Image src="/images/navlogo.png" style={{ height: 40, width: 40 }} />
             </IconButton>
           </Link>
-          <Link href={`/collection/${user.uid}`} passHref>
+          <Link href={`/collection/${user.id}`} passHref>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1, cursor: 'pointer' }}>
               My Collection
             </Typography>

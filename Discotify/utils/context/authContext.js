@@ -45,6 +45,7 @@ const AuthProvider = (props) => {
             };
             registerUser(userCreate).then((userObject) => {
               userObj = userObject;
+              console.warn(userObj);
             });
           } else {
             userObj = userInfo;

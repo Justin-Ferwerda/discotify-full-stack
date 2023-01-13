@@ -24,18 +24,19 @@ function AlbumForm({ obj }) {
       [name]: value,
     }));
     console.warn(formInput);
+    console.warn(user);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (obj.id) {
       updateAlbum(formInput)
-        .then(() => router.push(`/collection/${user.uid}`));
+        .then(() => router.push(`/collection/${user.id}`));
     } else {
       const payload = {
         ...formInput,
       };
-      createAlbum(payload).then(() => router.push(`/collection/${user.uid}`));
+      createAlbum(payload).then(() => router.push(`/collection/${user.id}`));
     }
   };
 

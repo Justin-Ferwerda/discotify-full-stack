@@ -3,6 +3,7 @@ from discotifyapi.models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from discotifyapi.serializers import UserSerializer
+from discotifyapi.helpers import snake_case_to_camel_case_single
 
 
 @api_view(['POST'])
@@ -19,7 +20,7 @@ def check_user(request):
         user = User.objects.get(uid=uid)
 
         serializer = UserSerializer(user)
-        return Response(serializer.data)
+        return Response(snake_case_to_camel_case_single(serializer.data))
     except:
         data = { 'valid': False }
         return Response(data)
@@ -41,4 +42,4 @@ def register_user(request):
     new_user = User.objects.get(uid=user.uid)
     
     serializer = UserSerializer(new_user)
-    return Response(serializer.data)
+    return Response(snake_case_to_camel_case_single(serializer.data))

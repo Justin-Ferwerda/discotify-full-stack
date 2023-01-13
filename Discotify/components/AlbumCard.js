@@ -59,9 +59,9 @@ function AlbumCard({
           <h6 className="albumName">{albumObj?.albumName}</h6>
           <h6>released: {albumObj?.releaseDate}</h6>
           <SpotifyPlayer height={80} spotifyId={albumObj?.spotifyId} />
-          <img className="albumCardUserImage" src={user.image} alt="headshot" />
+          <img className="albumCardUserImage" src={user?.image} alt="headshot" />
           <div className="cardButtons">
-            {router === `/trade/trades/${user.uid}` ? (<div />) : albumObj?.userId === user.id ? (
+            {router === `/trade/trades/${user.id}` ? (<div />) : albumObj?.userId === user.id ? (
               <>
                 <Link href={`/album/edit/${albumObj?.id}`} passHref>
                   <IconButton aria-label="edit" className="edit-btn">

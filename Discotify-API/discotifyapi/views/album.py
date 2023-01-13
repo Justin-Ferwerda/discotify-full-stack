@@ -4,7 +4,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from discotifyapi.models import Album, User, Track, Genre
 from discotifyapi.serializers import AlbumSerializer
-from discotifyapi.helpers import snake_case_to_camel_case, camel_case_to_snake_case
+from discotifyapi.helpers import snake_case_to_camel_case_many, camel_case_to_snake_case
 
 class AlbumView(ViewSet):
     """album views"""
@@ -16,7 +16,7 @@ class AlbumView(ViewSet):
 
         serializer = AlbumSerializer(albums, many=True)
 
-        data = snake_case_to_camel_case(serializer.data)
+        data = snake_case_to_camel_case_many(serializer.data)
 
         return Response(data)
 

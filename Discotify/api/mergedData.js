@@ -18,12 +18,6 @@ const getArtistNames = async (uid) => {
   return uniqueArray;
 };
 
-const getUserGenres = async (uid) => {
-  const userAlbums = await getUserAlbums(uid);
-  const genres = userAlbums.map((album) => album.genre);
-  return genres;
-};
-
 const getUserAlbumsByGenre = async (uid, genre) => {
   const userAlbums = await getUserAlbums(uid);
   return userAlbums.filter((album) => album.genre === genre);
@@ -49,5 +43,5 @@ const deleteAlbumAndWish = (albumFirebaseKey) => new Promise((resolve, reject) =
 });
 
 export {
-  getUsersWishList, getArtistNames, getUserGenres, deleteAlbumAndWish, getUserAlbumsByGenre,
+  getUsersWishList, getArtistNames, deleteAlbumAndWish, getUserAlbumsByGenre,
 };

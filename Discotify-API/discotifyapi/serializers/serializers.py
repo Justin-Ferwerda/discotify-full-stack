@@ -1,6 +1,7 @@
 """serializers"""
 from rest_framework.serializers import ModelSerializer
 from discotifyapi.models import Album, Trade, Wishlist, User, Genre, Track
+from discotifyapi.helpers import snake_case_to_camel_case_many, snake_case_to_camel_case_single
 
 class TrackSerializer(ModelSerializer):
     """track serializer"""
@@ -33,24 +34,25 @@ class WishlistSerializer(ModelSerializer):
         model = Wishlist
         fields = ('id', 'album', 'user')
         depth = 1
-
-class UserSerializer(ModelSerializer):
-    """user serializer"""
-    albums = AlbumSerializer(many=True)
-    wishlist = WishlistSerializer(many=True)
-    trades = TradeSerializer(many=True)
-    trade_requests = TradeSerializer(many=True)
-
-    class Meta:
-        model = User
-        fields = ('id', 'uid', 'member_since', 'name', 'image', 'albums', 'wishlist', 'trades', 'trade_requests')
-        depth = 1
-
-
-
+        
 class GenreSerializer(ModelSerializer):
     """genre serializer"""
 
     class Meta:
         model = Genre
         fields = ('id', 'label')
+
+class UserSerializer(ModelSerializer):
+    """user serializer"""
+
+    albums = AlbumSerializer(many=True)
+    wishlist = WishlistSerializer(many=True)
+    trades = TradeSerializer(many=True)
+    trade_requests = TradeSerializer(many=True)
+    unique_genres = GenreSerializer(many=True)
+    favorite_genre = GenreSerializer()
+
+    class Meta:
+        model = User
+        fields = ('id', 'uid', 'member_since', 'name', 'image', 'albums', 'wishlist', 'trades', 'trade_requests', 'unique_genres', 'favorite_genre')
+        depth = 1

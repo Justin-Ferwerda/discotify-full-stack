@@ -3,10 +3,11 @@ import { clientCredentials } from '../utils/client';
 
 const dbUrl = clientCredentials.databaseURL;
 
-const getUser = (uid) => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/users.json?orderBy="uid"&equalTo="${uid}"`)
-    .then((response) => resolve(Object.values(response.data)[0]))
-    .catch((reject));
+const getUser = (id) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/users/${id}`)
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
 });
 
 const getAllUsers = () => new Promise((resolve, reject) => {

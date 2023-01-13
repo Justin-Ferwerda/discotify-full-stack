@@ -1,8 +1,8 @@
 """helper functions"""
 
 
-def snake_case_to_camel_case(response_list):
-    """changes snake case in keys to camelCase for FE"""
+def snake_case_to_camel_case_many(response_list):
+    """changes snake case in keys to camelCase for FE list view"""
 
     for obj in response_list:
         for i in list(obj):
@@ -19,3 +19,12 @@ def camel_case_to_snake_case(data):
         data[index] = data.pop(i)
 
     return data
+
+def snake_case_to_camel_case_single(obj):
+    """for single retrieve view"""
+    for i in list(obj):
+        first, *rest = i.split('_')
+        index = ''.join([first.lower(), *map(str.title, rest)])
+        obj[index] = obj.pop(i)
+
+    return obj

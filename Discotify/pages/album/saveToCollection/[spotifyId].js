@@ -24,6 +24,7 @@ export default function EditPlayer() {
         userId: user.id,
       };
       setEditItem(object);
+      console.warn(object);
     });
   };
 

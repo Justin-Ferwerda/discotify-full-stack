@@ -3,8 +3,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Form, FloatingLabel } from 'react-bootstrap';
 import Head from 'next/head';
-import { getUserAlbums } from '../../api/albumData';
-import { getUserAlbumsByGenre, getUserGenres } from '../../api/mergedData';
 import { getUser } from '../../api/userData';
 import AlbumCard from '../../components/AlbumCard';
 import UserCard from '../../components/UserCard';
@@ -13,46 +11,32 @@ function MyAlbums() {
   const router = useRouter();
   const [albums, setAlbums] = useState([]);
   const [user, setUser] = useState({});
-  const [genres, setGenres] = useState([]);
   const [selected, setSelected] = useState();
-  const { uid } = router.query;
+  const { id } = router.query;
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchInput, setSearchInput] = useState('');
 
-  const getYourAlbums = () => {
-    getUserAlbums(uid).then(setAlbums);
-  };
-
-  const getUserObject = async () => {
-    const Object = await getUser(uid);
-    setUser(Object);
-  };
-
-  const getMyGenres = () => {
-    getUserGenres(uid).then(setGenres);
+  const getUserObject = () => {
+    getUser(id).then((res) => setUser(res)).then(setAlbums(user.albums));
   };
 
   const handleChange = (e) => {
     setSelected(e.target.value);
     if (e.target.value === 'all-albums') {
-      getUserAlbums(uid).then(setAlbums);
+      setAlbums(user.albums);
     } else {
-      getUserAlbumsByGenre(uid, e.target.value).then(setAlbums);
+      setAlbums(user.albums.filter((album) => album.genre.label === e.target.value));
     }
   };
 
   useEffect(() => {
-    getYourAlbums();
     getUserObject();
-    getMyGenres();
   }, []);
-
-  const uniqueGenres = (array) => array.filter((v, i, a) => a.indexOf(v) === i);
 
   const searchItems = (searchValue) => {
     setSearchInput(searchValue);
     if (searchInput !== '') {
-      const filteredData = albums.filter((album) => Object.values(album).join('').toLowerCase().includes(searchInput.toLowerCase()));
+      const filteredData = user.albums.filter((album) => Object.values(album).join('').toLowerCase().includes(searchInput.toLowerCase()));
       setFilteredResults(filteredData);
     } else { setFilteredResults(albums); }
   };
@@ -73,7 +57,7 @@ function MyAlbums() {
         <FloatingLabel controlId="floatingSelect" label="Sort">
           <Form.Select aria-label="Genre" name="genre" onChange={handleChange} className="mb-3" value={selected} required>
             <option value="all-albums">All Albums</option>
-            {uniqueGenres(genres)?.map((genre) => (
+            {user.unique_genres?.map((genre) => (
               <option key={genre} value={genre}>
                 {genre}
               </option>
@@ -85,13 +69,13 @@ function MyAlbums() {
         {searchInput.length > 1 ? (
           <div>
             {filteredResults?.map((album) => (
-              <AlbumCard key={album.albumFirebaseKey} src={album.recordImage} albumObj={album} onUpdate={getYourAlbums} />
+              <AlbumCard key={album.albumFirebaseKey} src={album.recordImage} albumObj={album} onUpdate={getUserObject} />
             ))}
           </div>
         ) : (
           <div>
             {albums?.map((album) => (
-              <AlbumCard key={album.albumFirebaseKey} src={album.recordImage} albumObj={album} onUpdate={getYourAlbums} />
+              <AlbumCard key={album.id} src={album.record_image} albumObj={album} onUpdate={getUserObject} />
             ))}
           </div>
         )}

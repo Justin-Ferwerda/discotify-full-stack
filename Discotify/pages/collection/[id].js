@@ -6,7 +6,6 @@ import Head from 'next/head';
 import { getUser } from '../../api/userData';
 import AlbumCard from '../../components/AlbumCard';
 import UserCard from '../../components/UserCard';
-import { useAuth } from '../../utils/context/authContext';
 
 function MyAlbums() {
   const router = useRouter();
@@ -16,11 +15,12 @@ function MyAlbums() {
   const { id } = router.query;
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchInput, setSearchInput] = useState('');
-  const { loggedUser } = useAuth();
 
-  const getUserObject = async () => {
-    const theUser = await getUser(id);
-    setUser(theUser);
+  const getUserObject = () => {
+    getUser(id).then((res) => {
+      setUser(res);
+      setAlbums(res.albums);
+    });
   };
 
   const handleChange = (e) => {
@@ -34,7 +34,6 @@ function MyAlbums() {
 
   useEffect(() => {
     getUserObject();
-    console.warn(loggedUser);
   }, []);
 
   const searchItems = (searchValue) => {
@@ -73,12 +72,12 @@ function MyAlbums() {
         {searchInput.length > 1 ? (
           <div>
             {filteredResults?.map((album) => (
-              <AlbumCard key={album.id} src={album.recordImage} albumObj={album} user={loggedUser} router={router.asPath} onUpdate={getUserObject} />
+              <AlbumCard key={album.id} src={album.recordImage} albumObj={album} router={router.asPath} onUpdate={getUserObject} />
             ))}
           </div>
         ) : (
           <div>
-            {user?.albums?.map((album) => (
+            {albums?.map((album) => (
               <AlbumCard key={album.id} src={album.recordImage} albumObj={album} onUpdate={getUserObject} router={router.asPath} />
             ))}
           </div>

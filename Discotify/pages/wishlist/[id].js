@@ -2,21 +2,23 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { getUsersWishList } from '../api/mergedData';
-import AlbumCard from '../components/AlbumCard';
-import { useAuth } from '../utils/context/authContext';
+import AlbumCard from '../../components/AlbumCard';
+import { getUser } from '../../api/userData';
 
 function WishList() {
-  const { user } = useAuth();
-  const [albums, setAlbums] = useState();
   const router = useRouter();
+  const [user, setUser] = useState({});
+  const { id } = router.query;
 
-  const userWishList = () => {
-    getUsersWishList(user.uid).then(setAlbums);
+  const getUserObject = async () => {
+    const theUser = await getUser(id);
+    setUser(theUser);
   };
 
+  const wishlist = user?.wishlist?.map((wish) => wish.album);
+
   useEffect(() => {
-    userWishList();
+    getUserObject();
   }, []);
 
   return (
@@ -26,10 +28,10 @@ function WishList() {
         <meta name="description" content="meta description for Wishlist Page" />
       </Head>
       <h2 className="wishlist-title">My Wishlist</h2>
-      {albums?.length ? (
+      {wishlist?.length ? (
         <div className="wishlist-container" id="wishListContainer">
-          {albums.map((album) => (
-            <AlbumCard key={album.albumFirebaseKey} src={album.recordImage} albumObj={album} router={router.asPath} onUpdate={userWishList} />
+          {wishlist.map((album) => (
+            <AlbumCard key={album.id} src={album.record_image} albumObj={album} onUpdate={getUserObject} router={router.asPath} />
           ))}
         </div>
       ) : (

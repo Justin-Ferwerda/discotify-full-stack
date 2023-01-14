@@ -29,6 +29,8 @@ class TradeSerializer(ModelSerializer):
 class WishlistSerializer(ModelSerializer):
     """wishlist serializer"""
 
+    album = AlbumSerializer()
+
     class Meta:
         model = Wishlist
         fields = ('id', 'album', 'user')

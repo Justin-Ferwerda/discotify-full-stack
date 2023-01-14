@@ -36,7 +36,7 @@ class AlbumView(ViewSet):
 
         data = camel_case_to_snake_case(request.data)
         user = User.objects.get(pk=data['user_id'])
-        genre = Genre.objects.get(pk=int(data['genre']))
+        genre = Genre.objects.get(pk=data['genre']['id'])
 
         album = Album.objects.create(
             user = user,

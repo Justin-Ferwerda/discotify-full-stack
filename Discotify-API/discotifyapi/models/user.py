@@ -1,6 +1,6 @@
 """user model"""
-from django.db import models
 from collections import Counter
+from django.db import models
 
 class User(models.Model):
     """user attributes"""
@@ -33,7 +33,7 @@ class User(models.Model):
         """user wishlist"""
         wishlist = [wish for wish in self.user_wishlist.all()]
         return wishlist
- 
+
     @property
     def unique_genres(self):
         """gets unique list of genres from user"""
@@ -42,7 +42,7 @@ class User(models.Model):
             genres.append(album.genre)
         return set(genres)
 
-    @property 
+    @property
     def favorite_genre(self):
         """gets favorite genre"""
         genres = []
@@ -52,6 +52,5 @@ class User(models.Model):
         if len(count_list):
             return count_list[0][0]
         else:
-            return None
-        
+            return ""
         

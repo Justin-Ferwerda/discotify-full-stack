@@ -18,9 +18,9 @@ function UserCard({ userObject }) {
     <div className="usercard">
       <Card className="userCard">
         <Card.Body>
-          <Avatar alt={userObject.userName} src={userObject.image} sx={{ width: 75, height: 75 }} />
+          <Avatar alt={userObject.name} src={userObject.image} sx={{ width: 75, height: 75 }} />
           <Card.Title>
-            {userObject.userName}
+            {userObject.name}
           </Card.Title>
           <Card.Subtitle className="mb-2 text-muted"><strong>Member Since: </strong>{userObject.memberSince}</Card.Subtitle>
           <Card.Text>
@@ -46,7 +46,7 @@ UserCard.propTypes = {
     name: PropTypes.string,
     image: PropTypes.string,
     memberSince: PropTypes.string,
-    favoriteGenre: PropTypes.string,
+    favoriteGenre: PropTypes.shape({}),
     id: PropTypes.number,
   }).isRequired,
 };

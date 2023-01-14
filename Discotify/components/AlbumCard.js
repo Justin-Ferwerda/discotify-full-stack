@@ -13,11 +13,14 @@ import {
 } from '../api/wishListData';
 import SpotifyPlayer from './SpotifyPlayer';
 import { deleteAlbum } from '../api/albumData';
+import { useAuth } from '../utils/context/authContext';
 
 function AlbumCard({
   // eslint-disable-next-line no-unused-vars
-  src, albumObj, onUpdate, router, user,
+  src, albumObj, onUpdate, router,
 }) {
+  const { user } = useAuth();
+
   const deleteThisAlbum = () => {
     if (window.confirm(`Delete ${albumObj.albumName}?`)) {
       deleteAlbum(albumObj.id).then(() => onUpdate());
@@ -48,20 +51,20 @@ function AlbumCard({
         flipOnHover={false}
         flipOnClick
         flipDirection="horizontal"
-        style={{ width: '300px', height: '300px', margin: '10px' }}
+        style={{ width: '300px', height: '300px' }}
       >
         <FrontSide className="cardFront">
           <img src={src} alt="album cover" />
         </FrontSide>
         <BackSide className="cardBack" style={{ backgroundColor: '#fff6ea' }}>
           <TracklistModal className="modal" obj={albumObj} />
-          <h6 className="artistName">{albumObj?.artistName}</h6>
-          <h6 className="albumName">{albumObj?.albumName}</h6>
-          <h6>released: {albumObj?.releaseDate}</h6>
-          <SpotifyPlayer height={80} spotifyId={albumObj?.spotifyId} />
-          <img className="albumCardUserImage" src={user?.image} alt="headshot" />
+          <h6 className="artistName">{albumObj.artistName}</h6>
+          <h6 className="albumName">{albumObj.albumName}</h6>
+          <h6>released: {albumObj.releaseDate}</h6>
+          <SpotifyPlayer height={80} spotifyId={albumObj?.spotify} />
+          <img className="albumCardUserImage" src={albumObj.user.image} alt="headshot" />
           <div className="cardButtons">
-            {router === `/trade/trades/${user.id}` ? (<div />) : albumObj?.userId === user.id ? (
+            {router === `/trade/trades/${user?.id}` ? (<div />) : albumObj?.user?.id === user?.id ? (
               <>
                 <Link href={`/album/edit/${albumObj?.id}`} passHref>
                   <IconButton aria-label="edit" className="edit-btn">
@@ -97,12 +100,17 @@ AlbumCard.propTypes = {
     artistName: PropTypes.string,
     albumName: PropTypes.string,
     releaseDate: PropTypes.string,
-    spotifyId: PropTypes.string,
-    userId: PropTypes.number,
+    spotify: PropTypes.string,
     id: PropTypes.number,
+    user: PropTypes.shape({
+      image: PropTypes.string,
+      id: PropTypes.number,
+    }),
   }).isRequired,
   trackList: PropTypes.shape({
     track: PropTypes.string,
+    number: PropTypes.number,
+    album: PropTypes.shape({}),
   }).isRequired,
   router: PropTypes.string,
   user: PropTypes.shape({

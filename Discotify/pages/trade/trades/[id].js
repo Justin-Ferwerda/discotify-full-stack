@@ -2,22 +2,21 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { getUserTradeRequests, getUserTrades } from '../../../api/tradeData';
+import { getUser } from '../../../api/userData';
 import TradeCard from '../../../components/TradeCard';
 
 function Trades() {
   const router = useRouter();
-  const { uid } = router.query;
-  const [trades, setTrades] = useState([]);
-  const [tradeRequests, setTradeRequests] = useState([]);
+  const { id } = router.query;
+  const [user, setUser] = useState();
 
-  const getTrades = () => {
-    getUserTrades(uid).then(setTrades);
-    getUserTradeRequests(uid).then(setTradeRequests);
+  const getUserObject = async () => {
+    const theUser = await getUser(id);
+    setUser(theUser);
   };
 
   useEffect(() => {
-    getTrades();
+    getUserObject();
   }, []);
 
   return (
@@ -27,16 +26,16 @@ function Trades() {
         <meta name="description" content="meta description for Trades Page" />
       </Head>
       <div className="trade-page">
-        {trades.length || tradeRequests.length ? (
+        {user?.trades?.length || user?.tradeRequests?.length ? (
           <>
             <div className="tradeRequestContainer">
-              {trades?.map((trade) => (
-                <TradeCard key={trade.tradeFirebaseKey} tradeObj={trade} onUpdate={getTrades} />
+              {user.trades?.map((trade) => (
+                <TradeCard key={trade.id} tradeObj={trade} onUpdate={getUserObject} />
               ))}
             </div>
             <div className="tradeOfferContainer">
-              {tradeRequests?.map((trade) => (
-                <TradeCard key={trade.tradeFirebaseKey} tradeObj={trade} onUpdate={getTrades} />
+              {user.tradeRequests?.map((trade) => (
+                <TradeCard key={trade.id} tradeObj={trade} onUpdate={getUserObject} />
               ))}
             </div>
           </>

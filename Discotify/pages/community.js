@@ -3,7 +3,6 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import bandsInTown from '../api/bandsInTownData';
-import { getArtistNames } from '../api/mergedData';
 import { getAllUsers } from '../api/userData';
 import ShowCard from '../components/ShowCard';
 import UserCard from '../components/UserCard';
@@ -11,7 +10,6 @@ import { useAuth } from '../utils/context/authContext';
 
 function Community() {
   const [users, setUsers] = useState([]);
-  const [artists, setArtists] = useState([]);
   const [formInput, setFormInput] = useState();
   const [shows, setShows] = useState([]);
   const { user } = useAuth();

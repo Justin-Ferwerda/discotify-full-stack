@@ -56,12 +56,12 @@ export default function MenuAppBar() {
               My Collection
             </Typography>
           </Link>
-          <Link href={`/trade/trades/${user.uid}`} passHref>
+          <Link href={`/trade/trades/${user.id}`} passHref>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1, cursor: 'pointer' }}>
               My Trades
             </Typography>
           </Link>
-          <Link href="/wishlist" passHref>
+          <Link href={`/wishlist/${user.id}`} passHref>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1, cursor: 'pointer' }}>
               Wishlist
             </Typography>

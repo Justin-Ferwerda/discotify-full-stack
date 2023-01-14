@@ -41,7 +41,7 @@ function AlbumCard({
   };
 
   const removeFromWishlist = () => {
-    const wish = user.wishlist.filter((wishObj) => wishObj.album_id === albumObj.id);
+    const wish = user.wishlist.filter((wishObj) => wishObj.album.id === albumObj.id);
     deleteWish(wish[0].id).then(() => onUpdate());
   };
 
@@ -75,7 +75,7 @@ function AlbumCard({
                   <DeleteIcon style={{ color: 'black' }} />
                 </IconButton>
               </>
-            ) : router === '/wishlist' ? (
+            ) : router === `/wishlist/${user.id}` ? (
               <>
                 <Button size="sm" className="remove-wishlist-btn" variant="outline-secondary" onClick={removeFromWishlist}>Remove From Wishlist</Button>
                 <Link href={`/trade/${albumObj?.id}`} passHref>

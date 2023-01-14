@@ -73,13 +73,13 @@ function MyAlbums() {
         {searchInput.length > 1 ? (
           <div>
             {filteredResults?.map((album) => (
-              <AlbumCard key={album.id} src={album.recordImage} albumObj={album} user={loggedUser} onUpdate={getUserObject} />
+              <AlbumCard key={album.id} src={album.recordImage} albumObj={album} user={loggedUser} router={router.asPath} onUpdate={getUserObject} />
             ))}
           </div>
         ) : (
           <div>
             {user?.albums?.map((album) => (
-              <AlbumCard key={album.id} src={album.recordImage} albumObj={album} user={loggedUser} onUpdate={getUserObject} />
+              <AlbumCard key={album.id} src={album.recordImage} albumObj={album} onUpdate={getUserObject} router={router.asPath} />
             ))}
           </div>
         )}

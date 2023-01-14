@@ -49,9 +49,8 @@ class UserSerializer(ModelSerializer):
     trades = TradeSerializer(many=True)
     trade_requests = TradeSerializer(many=True)
     unique_genres = GenreSerializer(many=True)
-    favorite_genre = GenreSerializer()
-
+    
     class Meta:
         model = User
-        fields = ('id', 'uid', 'member_since', 'name', 'image', 'albums', 'wishlist', 'trades', 'trade_requests', 'unique_genres', 'favorite_genre')
+        fields = ('id', 'uid', 'member_since', 'name', 'image', 'albums', 'wishlist', 'trades', 'trade_requests', 'unique_genres', 'favorite_genre', 'artist_names')
         depth = 1

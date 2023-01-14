@@ -24,7 +24,7 @@ function UserCard({ userObject }) {
           </Card.Title>
           <Card.Subtitle className="mb-2 text-muted"><strong>Member Since: </strong>{userObject.memberSince}</Card.Subtitle>
           <Card.Text>
-            <strong>Favorite Genre: {user.favoriteGenre.label} </strong>
+            <strong>Favorite Genre: {user.favoriteGenre} </strong>
           </Card.Text>
           {userObject.id === user.id ? (
             <div />

@@ -40,7 +40,10 @@ class User(models.Model):
         genres = []
         for album in self.user_albums.all():
             genres.append(album.genre)
-        return set(genres)
+        if len(genres) >=1:
+            return set(genres)
+        else:
+            return []
 
     @property
     def favorite_genre(self):
@@ -50,7 +53,13 @@ class User(models.Model):
             genres.append(album.genre)
         count_list = Counter(genres).most_common(1)
         if len(count_list):
-            return count_list[0][0]
+            return count_list[0][0].label
         else:
             return ""
         
+    @property
+    def artist_names(self):
+        """gets list of artist names"""
+        names = [album.artist_name for album in self.user_albums.all()]
+        
+        return names

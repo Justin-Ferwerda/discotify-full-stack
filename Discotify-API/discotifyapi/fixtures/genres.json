@@ -5,5 +5,12 @@
     "fields": {
       "label": "hip-hop"
     }
+  },
+  {
+    "model": "discotifyapi.genre",
+    "pk": 2,
+    "fields": {
+      "label": "rock"
+    }
   }
 ]

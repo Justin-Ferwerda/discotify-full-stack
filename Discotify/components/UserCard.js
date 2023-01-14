@@ -46,7 +46,7 @@ UserCard.propTypes = {
     name: PropTypes.string,
     image: PropTypes.string,
     memberSince: PropTypes.string,
-    favoriteGenre: PropTypes.shape({}),
+    favoriteGenre: PropTypes.string,
     id: PropTypes.number,
   }).isRequired,
 };

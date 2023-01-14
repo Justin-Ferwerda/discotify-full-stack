@@ -18,3 +18,12 @@ class UserView(ViewSet):
         snake_case_to_camel_case_many(serializer.data['albums'])
 
         return Response(snake_case_to_camel_case_single(serializer.data))
+
+    def list(self, request):
+        """get all users"""
+
+        users = User.objects.all()
+
+        serializer = UserSerializer(users, many=True)
+
+        return Response(snake_case_to_camel_case_many(serializer.data))

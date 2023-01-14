@@ -1,5 +1,5 @@
 DELETE from discotifyapi_user 
-  Where uid = 'Ilw5eFRVNqTA3g0nEd1O8M3bRA52'
+  Where id = 42
 
 DELETE from discotifyapi_album
   Where album_name = 'Ventura'

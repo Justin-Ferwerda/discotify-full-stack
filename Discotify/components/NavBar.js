@@ -81,7 +81,7 @@ export default function MenuAppBar() {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <Avatar alt={user.displayName} src={user.photoURL} />
+                <Avatar alt={user.displayName} src={user.image} />
               </IconButton>
               <Menu
                 id="menu-appbar"

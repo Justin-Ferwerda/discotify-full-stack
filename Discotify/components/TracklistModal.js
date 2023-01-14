@@ -20,7 +20,7 @@ function TracklistModal({ obj }) {
         <Modal.Header className="modalHeader" closeButton>
           <Modal.Title><div className="modalTitle"><i>{obj?.albumName}</i> by <u>{obj?.artistName}</u> Tracklist</div></Modal.Title>
         </Modal.Header>
-        <Modal.Body className="tracklist-modal">{obj?.trackList?.map((track) => <VideoModal key={track.id} trackName={track.name} artistName={obj?.artistName} trackNumber={track.track_number} />)}</Modal.Body>
+        <Modal.Body className="tracklist-modal">{obj?.tracks?.map((track) => <VideoModal key={track.id} trackName={track.name} artistName={obj?.artistName} trackNumber={track.number} />)}</Modal.Body>
       </Modal>
     </>
   );
@@ -29,10 +29,10 @@ function TracklistModal({ obj }) {
 TracklistModal.propTypes = {
   obj: PropTypes.shape({
     albumName: PropTypes.string,
-    trackList: PropTypes.arrayOf(PropTypes.shape({
+    tracks: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
-      track_number: PropTypes.number,
-      id: PropTypes.string,
+      number: PropTypes.string,
+      id: PropTypes.number,
     })),
     artistName: string,
   }).isRequired,

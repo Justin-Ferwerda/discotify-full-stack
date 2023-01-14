@@ -38,7 +38,7 @@ function VideoModal({ trackName, artistName, trackNumber }) {
 VideoModal.propTypes = {
   trackName: PropTypes.string.isRequired,
   artistName: PropTypes.string.isRequired,
-  trackNumber: PropTypes.number.isRequired,
+  trackNumber: PropTypes.string.isRequired,
 };
 
 export default VideoModal;

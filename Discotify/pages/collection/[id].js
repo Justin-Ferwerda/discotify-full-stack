@@ -6,18 +6,21 @@ import Head from 'next/head';
 import { getUser } from '../../api/userData';
 import AlbumCard from '../../components/AlbumCard';
 import UserCard from '../../components/UserCard';
+import { useAuth } from '../../utils/context/authContext';
 
 function MyAlbums() {
   const router = useRouter();
-  const [albums, setAlbums] = useState([]);
   const [user, setUser] = useState({});
+  const [albums, setAlbums] = useState([]);
   const [selected, setSelected] = useState();
   const { id } = router.query;
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchInput, setSearchInput] = useState('');
+  const { loggedUser } = useAuth();
 
-  const getUserObject = () => {
-    getUser(id).then((res) => setUser(res)).then(setAlbums(user.albums));
+  const getUserObject = async () => {
+    const theUser = await getUser(id);
+    setUser(theUser);
   };
 
   const handleChange = (e) => {
@@ -31,6 +34,7 @@ function MyAlbums() {
 
   useEffect(() => {
     getUserObject();
+    console.warn(loggedUser);
   }, []);
 
   const searchItems = (searchValue) => {
@@ -57,9 +61,9 @@ function MyAlbums() {
         <FloatingLabel controlId="floatingSelect" label="Sort">
           <Form.Select aria-label="Genre" name="genre" onChange={handleChange} className="mb-3" value={selected} required>
             <option value="all-albums">All Albums</option>
-            {user.unique_genres?.map((genre) => (
-              <option key={genre} value={genre}>
-                {genre}
+            {user?.uniqueGenres?.map((genre) => (
+              <option key={genre.label} value={genre.label}>
+                {genre.label}
               </option>
             ))}
           </Form.Select>
@@ -69,13 +73,13 @@ function MyAlbums() {
         {searchInput.length > 1 ? (
           <div>
             {filteredResults?.map((album) => (
-              <AlbumCard key={album.albumFirebaseKey} src={album.recordImage} albumObj={album} onUpdate={getUserObject} />
+              <AlbumCard key={album.id} src={album.recordImage} albumObj={album} user={loggedUser} onUpdate={getUserObject} />
             ))}
           </div>
         ) : (
           <div>
-            {albums?.map((album) => (
-              <AlbumCard key={album.id} src={album.record_image} albumObj={album} onUpdate={getUserObject} />
+            {user?.albums?.map((album) => (
+              <AlbumCard key={album.id} src={album.recordImage} albumObj={album} user={loggedUser} onUpdate={getUserObject} />
             ))}
           </div>
         )}

@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.conf.urls import include
 from django.urls import path
 from rest_framework import routers
-from discotifyapi.views import check_user, register_user, UserView, AlbumView, WishlistView, GenreView
+from discotifyapi.views import check_user, register_user, UserView, AlbumView, WishlistView, GenreView, TradeView
 
 router = routers.DefaultRouter(trailing_slash=False)
 
@@ -25,6 +25,7 @@ router.register(r'users', UserView, 'user')
 router.register(r'albums', AlbumView, 'album')
 router.register(r'wishlist', WishlistView, 'wish')
 router.register(r'genres', GenreView, 'genre')
+router.register(r'trades', TradeView, 'trade')
 
 urlpatterns = [
     path('register', register_user),

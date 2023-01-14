@@ -5,3 +5,4 @@ from .user import UserView
 from .album import AlbumView
 from .wishlist import WishlistView
 from .genre import GenreView
+from .trade import TradeView

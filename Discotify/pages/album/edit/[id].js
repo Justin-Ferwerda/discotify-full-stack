@@ -8,11 +8,11 @@ export default function EditAlbum() {
   const [editItem, setEditItem] = useState({});
   const router = useRouter();
 
-  const { albumFirebaseKey } = router.query;
+  const { id } = router.query;
 
   useEffect(() => {
-    getSingleAlbum(albumFirebaseKey).then(setEditItem);
-  }, [albumFirebaseKey]);
+    getSingleAlbum(id).then(setEditItem);
+  }, [id]);
 
   return (
     <>

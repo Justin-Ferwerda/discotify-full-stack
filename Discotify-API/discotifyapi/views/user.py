@@ -14,7 +14,7 @@ class UserView(ViewSet):
         user = User.objects.get(pk=pk)
 
         serializer = UserSerializer(user)
-        
+
         snake_case_to_camel_case_many(serializer.data['albums'])
-        
+
         return Response(snake_case_to_camel_case_single(serializer.data))

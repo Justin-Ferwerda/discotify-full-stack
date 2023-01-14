@@ -1,7 +1,6 @@
 """serializers"""
 from rest_framework.serializers import ModelSerializer
 from discotifyapi.models import Album, Trade, Wishlist, User, Genre, Track
-from discotifyapi.helpers import snake_case_to_camel_case_many, snake_case_to_camel_case_single
 
 class TrackSerializer(ModelSerializer):
     """track serializer"""
@@ -34,7 +33,7 @@ class WishlistSerializer(ModelSerializer):
         model = Wishlist
         fields = ('id', 'album', 'user')
         depth = 1
-        
+
 class GenreSerializer(ModelSerializer):
     """genre serializer"""
 

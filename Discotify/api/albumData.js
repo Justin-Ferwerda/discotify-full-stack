@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { clientCredentials } from '../utils/client';
 
 const dbUrl = clientCredentials.databaseURL;
@@ -22,10 +21,11 @@ const getAlbums = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const getSingleAlbum = (albumFirebaseKey) => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/albums/${albumFirebaseKey}.json`)
-    .then((response) => resolve(response.data))
-    .catch((error) => reject(error));
+const getSingleAlbum = (id) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/albums/${id}`)
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
 });
 
 const deleteAlbum = (id) => new Promise((resolve, reject) => {
@@ -36,6 +36,18 @@ const deleteAlbum = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const updateAlbum = (album) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/albums/${album.id}`, {
+    method: 'PUT',
+    body: JSON.stringify(album),
+    headers: {
+      'content-type': 'application/json',
+    },
+  })
+    .then((response) => resolve(response))
+    .catch((error) => reject(error));
+});
+
 export {
-  createAlbum, getSingleAlbum, getAlbums, deleteAlbum,
+  createAlbum, getSingleAlbum, getAlbums, deleteAlbum, updateAlbum,
 };

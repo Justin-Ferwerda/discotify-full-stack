@@ -2,12 +2,23 @@
 
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
+from rest_framework import status
 from discotifyapi.models import Album, User, Track, Genre
 from discotifyapi.serializers import AlbumSerializer
-from discotifyapi.helpers import snake_case_to_camel_case_many, camel_case_to_snake_case
+from discotifyapi.helpers import snake_case_to_camel_case_many, camel_case_to_snake_case, snake_case_to_camel_case_single
 
 class AlbumView(ViewSet):
     """album views"""
+
+    def retrieve(self, request, pk):
+        """get single album"""
+
+        album = Album.objects.get(pk=pk)
+
+        serializer = AlbumSerializer(album)
+
+        return Response(snake_case_to_camel_case_single(serializer.data))
+
 
     def list(self, request):
         """get multiple albums"""
@@ -50,3 +61,30 @@ class AlbumView(ViewSet):
         serializer = AlbumSerializer(album)
 
         return Response(serializer.data)
+
+    def update(self, request, pk):
+        """handles update request for albums"""
+        data = camel_case_to_snake_case(request.data)
+
+        album = Album.objects.get(pk=pk)
+
+        album.artist_name = data['artist_name']
+        album.album_name = data['album_name']
+        album.release_date = data['release_date']
+
+        genre = Genre.objects.get(pk=data['genre']['id'])
+
+        album.genre = genre
+        album.save()
+
+        serializer = AlbumSerializer(album)
+
+        return Response(snake_case_to_camel_case_single(serializer.data))
+
+    def destroy(self, request, pk):
+        """ handles delete requests for album"""
+
+        album = Album.objects.get(pk=pk)
+        album.delete()
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)

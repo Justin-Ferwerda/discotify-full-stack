@@ -8,7 +8,7 @@ import { useAuth } from '../../utils/context/authContext';
 
 function AlbumForm({ obj }) {
   const [formInput, setFormInput] = useState();
-  const [genres, setGenres] = useState();
+  const [genres, setGenres] = useState([]);
   const { user } = useAuth();
   const router = useRouter();
 
@@ -19,12 +19,17 @@ function AlbumForm({ obj }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormInput((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-    console.warn(formInput);
-    console.warn(user);
+    if (name === 'genre') {
+      setFormInput((prevState) => ({
+        ...prevState,
+        [name]: genres.filter((genre) => genre.id === Number(value)).shift(),
+      }));
+    } else {
+      setFormInput((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = (e) => {
@@ -59,8 +64,8 @@ function AlbumForm({ obj }) {
           <Form.Control type="text" placeholder="Release Date" name="release_date" value={formInput?.releaseDate} onChange={handleChange} required />
         </FloatingLabel>
 
-        <FloatingLabel controlId="floatingSelect" label="Category">
-          <Form.Select aria-label="Genre" name="genre" onChange={handleChange} className="mb-3" value={formInput?.genre} required>
+        <FloatingLabel controlId="floatingSelect" label="genre">
+          <Form.Select aria-label="Genre" name="genre" onChange={handleChange} className="mb-3" value={formInput?.genre?.id} required>
             <option value="">Select a Genre</option>
             {genres?.map((genre) => (
               <option key={genre.label} value={genre.id}>
@@ -78,7 +83,7 @@ function AlbumForm({ obj }) {
 AlbumForm.propTypes = {
   obj: PropTypes.shape({
     id: PropTypes.number,
-    genre: PropTypes.string,
+    genre: PropTypes.shape({}),
   }),
 };
 

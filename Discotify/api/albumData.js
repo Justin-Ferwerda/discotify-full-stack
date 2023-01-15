@@ -37,8 +37,8 @@ const deleteAlbum = (id) => new Promise((resolve, reject) => {
 });
 
 const updateAlbum = (album) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/albums`, {
-    method: 'POST',
+  fetch(`${dbUrl}/albums/${album.id}`, {
+    method: 'PUT',
     body: JSON.stringify(album),
     headers: {
       'content-type': 'application/json',

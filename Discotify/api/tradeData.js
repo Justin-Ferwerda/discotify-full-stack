@@ -3,13 +3,28 @@ import { clientCredentials } from '../utils/client';
 
 const dbUrl = clientCredentials.databaseURL;
 
-const createTrade = (tradeObj) => new Promise((resolve, reject) => {
-  axios.post(`${dbUrl}/trades.json`, tradeObj)
-    .then((response) => {
-      const payload = { tradeFirebaseKey: response.data.name };
-      axios.patch(`${dbUrl}/trades/${response.data.name}.json`, payload)
-        .then(resolve);
-    }).catch(reject);
+const createTrade = (payload) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/trades`, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+    headers: {
+      'content-type': 'application/json',
+    },
+  })
+    .then((response) => resolve(response.json()))
+    .catch((error) => reject(error));
+});
+
+const resolveTrade = (data) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/trades/resolve_trade`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'content-type': 'application/json',
+    },
+  })
+    .then((response) => resolve(response))
+    .catch((error) => reject(error));
 });
 
 const getUserTrades = (uid) => new Promise((resolve, reject) => {
@@ -52,5 +67,5 @@ const getAllTrades = () => new Promise((resolve, reject) => {
 });
 
 export {
-  createTrade, getUserTrades, deleteSingleTrade, getUserTradeRequests, getAllTrades,
+  createTrade, getUserTrades, deleteSingleTrade, getUserTradeRequests, getAllTrades, resolveTrade,
 };

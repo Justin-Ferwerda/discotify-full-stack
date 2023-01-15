@@ -24,7 +24,7 @@ class TradeSerializer(ModelSerializer):
     class Meta:
         model = Trade
         fields = ('id', 'user', 'trade_recipient_user', 'trader_album', 'tradee_album')
-        depth = 1
+        depth = 2
 
 class WishlistSerializer(ModelSerializer):
     """wishlist serializer"""

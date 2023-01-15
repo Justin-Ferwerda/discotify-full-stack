@@ -1,72 +1,47 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
 import SyncAltIcon from '@mui/icons-material/SyncAlt';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import { getSingleAlbum, updateAlbum } from '../api/albumData';
 import AlbumCard from './AlbumCard';
 import { useAuth } from '../utils/context/authContext';
-import { deleteSingleTrade } from '../api/tradeData';
-import { deleteWish, getWishByFirebaseKey } from '../api/wishListData';
+import { deleteSingleTrade, resolveTrade } from '../api/tradeData';
 
 function TradeCard({ tradeObj, onUpdate }) {
-  const [offer, setOffer] = useState({});
-  const [request, setRequest] = useState({});
   const { user } = useAuth();
   const router = useRouter();
 
-  const getTradeAlbums = () => {
-    getSingleAlbum(tradeObj.traderAlbumFBKey).then(setOffer);
-    getSingleAlbum(tradeObj.tradeRecipientAlbumFBKey).then(setRequest);
-  };
-
   const deleteThisTrade = () => {
-    deleteSingleTrade(tradeObj.tradeFirebaseKey).then(() => {
+    deleteSingleTrade(tradeObj.id).then(() => {
       onUpdate();
     });
   };
 
-  const swapAlbums = () => {
-    const offerAlbum = {
-      uid: offer.uid,
-      creatorImage: offer.creatorImage,
-      creatorName: offer.creatorName,
+  const approveTrade = () => {
+    const payload = {
+      user1: tradeObj.user.id,
+      album1: tradeObj.tradee_album.id,
+      user2: tradeObj.trade_recipient_user.id,
+      album2: tradeObj.trader_album.id,
+      trade: tradeObj.id,
     };
-    const requestAlbum = {
-      uid: request.uid,
-      creatorImage: request.creatorImage,
-      creatorName: request.creatorName,
-    };
-    updateAlbum(offerAlbum, request.albumFirebaseKey);
-    updateAlbum(requestAlbum, offer.albumFirebaseKey);
-  };
-
-  const approveThisTrade = () => {
-    getWishByFirebaseKey(request.albumFirebaseKey).then((response) => {
-      const wishToDelete = response.filter((wish) => wish.uid === offer.uid);
-      deleteWish(wishToDelete[0].firebaseKey);
+    resolveTrade(payload).then(() => {
+      onUpdate();
     });
-    swapAlbums();
-    deleteThisTrade();
   };
-
-  useEffect(() => {
-    getTradeAlbums();
-  }, [tradeObj]);
 
   return (
     <div className="tradeCard border border-dark">
-      <AlbumCard key={request?.albumFirebaseKey} src={request?.recordImage} albumObj={request} router={router.asPath} />
+      <AlbumCard key={tradeObj?.trader_album?.id} src={tradeObj?.trader_album?.record_image} albumObj={tradeObj.trader_album} router={router.asPath} />
       <SyncAltIcon />
-      <AlbumCard key={offer?.albumFirebaseKey} src={offer?.recordImage} albumObj={offer} router={router.asPath} />
-      {tradeObj.uid === user.uid ? (
+      <AlbumCard key={tradeObj?.tradee_album?.id} src={tradeObj?.tradee_album?.record_image} albumObj={tradeObj?.tradee_album} router={router.asPath} />
+      {tradeObj.user.id === user?.id ? (
         <div className="trade-btn-container">
           <Button className="rescind-trade-btn" onClick={deleteThisTrade}>Rescind Trade</Button>
         </div>
       ) : (
         <div className="trade-btn-container">
-          <Button className="approve-trade-btn" onClick={approveThisTrade}>Approve Trade</Button>
+          <Button className="approve-trade-btn" onClick={approveTrade}>Approve Trade</Button>
           <Button className="deny-trade-btn" onClick={deleteThisTrade}>Deny Trade</Button>
         </div>
       )}
@@ -77,10 +52,22 @@ function TradeCard({ tradeObj, onUpdate }) {
 TradeCard.propTypes = {
   onUpdate: PropTypes.func.isRequired,
   tradeObj: PropTypes.shape({
-    traderAlbumFBKey: PropTypes.string,
-    tradeRecipientAlbumFBKey: PropTypes.string,
-    uid: PropTypes.string,
-    tradeFirebaseKey: PropTypes.string,
+    id: PropTypes.number,
+    user: PropTypes.shape({
+      id: PropTypes.number,
+    }),
+    trader_album: PropTypes.shape({
+      id: PropTypes.number,
+      record_image: PropTypes.string,
+    }),
+    tradee_album: PropTypes.shape({
+      id: PropTypes.number,
+      record_image: PropTypes.string,
+    }),
+    trade_recipient_user: PropTypes.shape({
+      id: PropTypes.number,
+    }),
+
   }).isRequired,
 };
 

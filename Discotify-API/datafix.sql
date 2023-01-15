@@ -6,3 +6,6 @@ DELETE from discotifyapi_album
 
 DELETE from discotifyapi_track
   Where album_id = 2
+
+DELETE from discotifyapi_wishlist 
+  Where id = 2

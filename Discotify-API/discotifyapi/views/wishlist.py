@@ -12,8 +12,7 @@ class WishlistView(ViewSet):
 
     def create(self, request):
         """handles POST requests for wishlist"""
-        
-        
+
         data = camel_case_to_snake_case(request.data)
         album = Album.objects.get(pk=data['album_id'])
         user = User.objects.get(pk=data['user_id'])
@@ -29,6 +28,9 @@ class WishlistView(ViewSet):
 
     def destroy(self, request, pk):
         """deletes wish object"""
-        wish = Wishlist.objects.get(pk=pk)
+        album = Album.objects.get(pk=pk)
+
+        wish = Wishlist.objects.filter(album=album)
         wish.delete()
+
         return Response(None, status=status.HTTP_204_NO_CONTENT)

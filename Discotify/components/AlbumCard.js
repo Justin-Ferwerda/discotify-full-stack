@@ -41,8 +41,9 @@ function AlbumCard({
   };
 
   const removeFromWishlist = () => {
-    const wish = user.wishlist.filter((wishObj) => wishObj.album.id === albumObj.id);
-    deleteWish(wish[0].id).then(() => onUpdate());
+    deleteWish(albumObj.id).then(() => {
+      onUpdate();
+    });
   };
 
   return (
@@ -62,7 +63,7 @@ function AlbumCard({
           <h6 className="albumName">{albumObj.albumName}</h6>
           <h6>released: {albumObj.releaseDate}</h6>
           <SpotifyPlayer height={80} spotifyId={albumObj?.spotify} />
-          <img className="albumCardUserImage" src={albumObj.user.image} alt="headshot" />
+          <img className="albumCardUserImage" src={albumObj?.user?.image} alt="headshot" />
           <div className="cardButtons">
             {router === `/trade/trades/${user?.id}` ? (<div />) : albumObj?.user?.id === user?.id ? (
               <>
@@ -107,18 +108,7 @@ AlbumCard.propTypes = {
       id: PropTypes.number,
     }),
   }).isRequired,
-  trackList: PropTypes.shape({
-    track: PropTypes.string,
-    number: PropTypes.number,
-    album: PropTypes.shape({}),
-  }).isRequired,
   router: PropTypes.string,
-  user: PropTypes.shape({
-    uid: PropTypes.string,
-    id: PropTypes.number,
-    image: PropTypes.string,
-    wishlist: PropTypes.arrayOf(PropTypes.shape({})),
-  }).isRequired,
 };
 
 AlbumCard.defaultProps = {

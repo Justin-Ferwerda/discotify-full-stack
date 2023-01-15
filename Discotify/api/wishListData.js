@@ -15,8 +15,8 @@ const createWishlist = (wish) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const deleteWish = (id) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/wishlist/${id}`, {
+const deleteWish = (albumid) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/wishlist/${albumid}`, {
     method: 'DELETE',
     headers: {
       'content-type': 'application/json',

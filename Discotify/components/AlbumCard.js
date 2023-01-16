@@ -28,14 +28,14 @@ function AlbumCard({
   };
 
   const addToWishlist = () => {
-    if (user.wishlist?.some((wish) => wish.album_id === albumObj.id)) {
+    if (user.wishlist?.some((wish) => wish.album.id === albumObj.id)) {
       alert('Album already in Wishlist!');
     } else {
       const payload = {
         albumId: albumObj.id,
         userId: user.id,
       };
-      createWishlist(payload);
+      createWishlist(payload).then(() => onUpdate());
       window.confirm(`added ${albumObj.albumName} by ${albumObj.artistName} to your wishlist!`);
     }
   };

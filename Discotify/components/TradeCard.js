@@ -5,14 +5,14 @@ import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import AlbumCard from './AlbumCard';
 import { useAuth } from '../utils/context/authContext';
-import { deleteSingleTrade, resolveTrade } from '../api/tradeData';
+import { deleteTrade, resolveTrade } from '../api/tradeData';
 
 function TradeCard({ tradeObj, onUpdate }) {
   const { user } = useAuth();
   const router = useRouter();
 
   const deleteThisTrade = () => {
-    deleteSingleTrade(tradeObj.id).then(() => {
+    deleteTrade(tradeObj.id).then(() => {
       onUpdate();
     });
   };

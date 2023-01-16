@@ -62,4 +62,4 @@ class User(models.Model):
         """gets list of artist names"""
         names = [album.artist_name for album in self.user_albums.all()]
         
-        return names
+        return list(set(names))

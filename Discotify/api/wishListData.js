@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { clientCredentials } from '../utils/client';
 
 const dbUrl = clientCredentials.databaseURL;
@@ -26,30 +25,6 @@ const deleteWish = (albumid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const getUserWishlist = (uid) => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/wishlist.json?orderBy="uid"&equalTo="${uid}"`)
-    .then((response) => {
-      if (response.data) {
-        resolve(Object.values(response.data));
-      } else {
-        resolve([]);
-      }
-    })
-    .catch((error) => reject(error));
-});
-
-const getWishByFirebaseKey = (albumFirebaseKey) => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/wishlist.json?orderBy="albumFirebaseKey"&equalTo="${albumFirebaseKey}"`)
-    .then((response) => {
-      if (response.data) {
-        resolve(Object.values(response.data));
-      } else {
-        resolve([]);
-      }
-    })
-    .catch((error) => reject(error));
-});
-
 export {
-  createWishlist, getUserWishlist, getWishByFirebaseKey, deleteWish,
+  createWishlist, deleteWish,
 };

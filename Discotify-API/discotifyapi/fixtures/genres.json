@@ -12,5 +12,103 @@
     "fields": {
       "label": "rock"
     }
+  },
+  {
+    "model": "discotifyapi.genre",
+    "pk": 3,
+    "fields": {
+      "label": "pop"
+    }
+  },
+  {
+    "model": "discotifyapi.genre",
+    "pk": 4,
+    "fields": {
+      "label": "jazz"
+    }
+  },
+  {
+    "model": "discotifyapi.genre",
+    "pk": 5,
+    "fields": {
+      "label": "metal"
+    }
+  },
+  {
+    "model": "discotifyapi.genre",
+    "pk": 6,
+    "fields": {
+      "label": "rap"
+    }
+  },
+  {
+    "model": "discotifyapi.genre",
+    "pk": 7,
+    "fields": {
+      "label": "indie"
+    }
+  },
+  {
+    "model": "discotifyapi.genre",
+    "pk": 8,
+    "fields": {
+      "label": "blues"
+    }
+  },
+  {
+    "model": "discotifyapi.genre",
+    "pk": 9,
+    "fields": {
+      "label": "country"
+    }
+  },
+  {
+    "model": "discotifyapi.genre",
+    "pk": 10,
+    "fields": {
+      "label": "folk"
+    }
+  },
+  {
+    "model": "discotifyapi.genre",
+    "pk": 11,
+    "fields": {
+      "label": "alt-country"
+    }
+  },
+  {
+    "model": "discotifyapi.genre",
+    "pk": 12,
+    "fields": {
+      "label": "classic rock"
+    }
+  },
+  {
+    "model": "discotifyapi.genre",
+    "pk": 13,
+    "fields": {
+      "label": "glam"
+    }
+  },
+  {
+    "model": "discotifyapi.genre",
+    "pk": 14,
+    "fields": {
+      "label": "electronic"
+    }
+  },
+  {
+    "model": "discotifyapi.genre",
+    "pk": 15,
+    "fields": {
+      "label": "dance"
+    }
+  },
+  {
+    "model": "discotifyapi.genre",
+    "pk": 16,
+    "fields": {
+      "label": "spoken word"
+    }
   }
 ]

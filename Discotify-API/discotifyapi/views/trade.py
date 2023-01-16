@@ -48,9 +48,9 @@ class TradeView(ViewSet):
 
         user1 = User.objects.get(pk=request.data['user1'])
         user2 = User.objects.get(pk=request.data['user2'])
-        
+
         wish = Wishlist.objects.filter(album=album1, user=user1)
-        
+
         wish.delete()
 
         album1.user = user1
@@ -61,7 +61,5 @@ class TradeView(ViewSet):
 
         trade = Trade.objects.get(pk=request.data['trade'])
         trade.delete()
-        
-        
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)

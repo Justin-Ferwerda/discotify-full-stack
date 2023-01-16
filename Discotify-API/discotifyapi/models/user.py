@@ -56,10 +56,10 @@ class User(models.Model):
             return count_list[0][0].label
         else:
             return ""
-        
+
     @property
     def artist_names(self):
         """gets list of artist names"""
         names = [album.artist_name for album in self.user_albums.all()]
-        
+
         return list(set(names))

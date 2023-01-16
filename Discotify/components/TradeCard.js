@@ -1,15 +1,13 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 import SyncAltIcon from '@mui/icons-material/SyncAlt';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
-import { useRouter } from 'next/router';
-import AlbumCard from './AlbumCard';
 import { useAuth } from '../utils/context/authContext';
 import { deleteTrade, resolveTrade } from '../api/tradeData';
 
 function TradeCard({ tradeObj, onUpdate }) {
   const { user } = useAuth();
-  const router = useRouter();
 
   const deleteThisTrade = () => {
     deleteTrade(tradeObj.id).then(() => {
@@ -32,9 +30,9 @@ function TradeCard({ tradeObj, onUpdate }) {
 
   return (
     <div className="tradeCard border border-dark">
-      <AlbumCard key={tradeObj?.trader_album?.id} src={tradeObj?.trader_album?.record_image} albumObj={tradeObj.trader_album} router={router.asPath} />
+      <img src={tradeObj?.trader_album?.record_image} alt="record" className="border border-dark" />
       <SyncAltIcon />
-      <AlbumCard key={tradeObj?.tradee_album?.id} src={tradeObj?.tradee_album?.record_image} albumObj={tradeObj?.tradee_album} router={router.asPath} />
+      <img src={tradeObj?.tradee_album?.record_image} alt="record" className="border border-dark" />
       {tradeObj.user.id === user?.id ? (
         <div className="trade-btn-container">
           <Button className="rescind-trade-btn" onClick={deleteThisTrade}>Rescind Trade</Button>

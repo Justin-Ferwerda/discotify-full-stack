@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { clientCredentials } from '../utils/client';
 
 const dbUrl = clientCredentials.databaseURL;
@@ -27,45 +26,14 @@ const resolveTrade = (data) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const getUserTrades = (uid) => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/trades.json?orderBy="uid"&equalTo="${uid}"`)
-    .then((response) => {
-      if (response.data) {
-        resolve(Object.values(response.data));
-      } else {
-        resolve([]);
-      }
-    }).catch((error) => reject(error));
-});
-
-const getUserTradeRequests = (uid) => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/trades.json?orderBy="tradeRecipientUid"&equalTo="${uid}"`)
-    .then((response) => {
-      if (response.data) {
-        resolve(Object.values(response.data));
-      } else {
-        resolve([]);
-      }
-    }).catch((error) => reject(error));
-});
-
-const deleteSingleTrade = (firebaseKey) => new Promise((resolve, reject) => {
-  axios.delete(`${dbUrl}/trades/${firebaseKey}.json`)
+const deleteTrade = (id) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/trades/${id}`, {
+    method: 'DELETE',
+  })
     .then(resolve)
-    .catch((error) => reject(error));
-});
-
-const getAllTrades = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/trades.json`)
-    .then((response) => {
-      if (response.data) {
-        resolve(Object.values(response.data));
-      } else {
-        resolve([]);
-      }
-    }).catch((error) => reject(error));
+    .catch(reject);
 });
 
 export {
-  createTrade, getUserTrades, deleteSingleTrade, getUserTradeRequests, getAllTrades, resolveTrade,
+  createTrade, resolveTrade, deleteTrade,
 };

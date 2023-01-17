@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  api:
+    build: ./Discotify-API
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./Discotify-API:/discotify-API 
+
+  web:
+    build: 
+      context: ./Discotify
+      dockerfile: ./Discotify/Dockerfile
+    container_name: web
+    restart: always
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.next
+    ports:
+      - 3000:3000

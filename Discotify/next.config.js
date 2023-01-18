@@ -1,5 +1,11 @@
 module.exports = {
   reactStrictMode: true,
-  // I don't want it to run when compiling as I trust the CI stage of the pipeline and Husky.
   ignoreDuringBuilds: true,
+  webpackDevMiddleware: (config) => {
+    config.watchOptions = {
+      poll: 1000,
+      aggregateTimeout: 300,
+    };
+    return config;
+  },
 };

@@ -21,7 +21,7 @@ def camel_case_to_snake_case(data):
     return data
 
 def snake_case_to_camel_case_single(obj):
-    """for single retrieve view"""
+    """for single retrieve method handler"""
     for i in list(obj):
         first, *rest = i.split('_')
         index = ''.join([first.lower(), *map(str.title, rest)])

@@ -28,15 +28,15 @@ The trickiest part of this process was each API had a different auth process to 
 ## Features
 
 ### Login
-![sign in](/public/images/logoScreenshot.png)
+![sign in](Discotify/public/images/logoScreenshot.png)
 
 After logging in, you will be directed to enter an album name. This is the only part of the site that requires a user to type information.
 
-![enter album](/public/images/albumEnter.png)
+![enter album](Discotify/public/images/albumEnter.png)
 
 After saving an album to your collection, you will be guided to this screen, where you can access the rest of the features of the app.
 
-![home page](/public/images/homePage.png)
+![home page](Discotify/public/images/homePage.png)
 
 ### Users Can -
 
@@ -94,7 +94,7 @@ const getVideo = (artistAndAlbum) => new Promise((resolve, reject) => {
 ```
 ## ERD
 
-![ERD](/public/images/ERD.png)
+![ERD](Discotify/public/images/ERD.png)
 
 ## Loom Video
 

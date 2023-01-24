@@ -5,6 +5,14 @@ It was built with Javascript, react and Next.js.
 
 My focus on this project was using external data to provide most of the functionality and have it be a very simple user-friendly flow through the app.
 
+## Getting Started
+
+There are two ways to set up this project locally. To get a local copy up and running follow these steps.
+
+### Installation Using Docker
+
+
+
 ## The Data
 
 I used 3 external APIs to collect data for Discotify -

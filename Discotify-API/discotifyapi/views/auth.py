@@ -20,7 +20,7 @@ def check_user(request):
         user = User.objects.get(uid=uid)
 
         serializer = UserSerializer(user)
-        return Response(snake_case_to_camel_case_single(serializer.data))
+        return Response(serializer.data)
     except:
         data = { 'valid': False }
         return Response(data)
@@ -40,6 +40,6 @@ def register_user(request):
     )
 
     new_user = User.objects.get(uid=user.uid)
-    
+
     serializer = UserSerializer(new_user)
     return Response(snake_case_to_camel_case_single(serializer.data))

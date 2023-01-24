@@ -19,10 +19,11 @@ function AlbumPreview() {
 
   const setState = () => {
     getAlbums().then(setAlbums);
+    console.warn(albums);
   };
 
   const addWishlist = () => {
-    const albumToAdd = albums.filter((album) => album.spotifyId === spotifyId);
+    const albumToAdd = albums.filter((album) => album.spotify === spotifyId);
     const payload = {
       albumId: albumToAdd.id,
       userId: user.id,
@@ -42,7 +43,7 @@ function AlbumPreview() {
         <title>Discotify - Preview</title>
         <meta name="description" content="meta description for Album Preview Page" />
       </Head>
-      {albums.some((album) => album.spotifyId === spotifyId) ? (
+      {albums?.some((album) => album.spotify === spotifyId) ? (
         <div>
           <h2 className="album-owned">Sorry album is already owned, would you like to add this album to your wishlist?</h2>
           <Button onClick={addWishlist}>Yes</Button>

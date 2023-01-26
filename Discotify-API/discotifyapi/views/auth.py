@@ -20,7 +20,7 @@ def check_user(request):
         user = User.objects.get(uid=uid)
 
         serializer = UserSerializer(user)
-        return Response(serializer.data)
+        return Response(snake_case_to_camel_case_single(serializer.data))
     except:
         data = { 'valid': False }
         return Response(data)

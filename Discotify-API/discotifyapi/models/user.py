@@ -37,20 +37,16 @@ class User(models.Model):
     @property
     def unique_genres(self):
         """gets unique list of genres from user"""
-        genres = []
-        for album in self.user_albums.all():
-            genres.append(album.genre)
+        genres = [album.genre for album in self.user_albums.all()]
         if len(genres) >=1:
-            return set(genres)
+            return list(set(genres))
         else:
             return []
 
     @property
     def favorite_genre(self):
         """gets favorite genre"""
-        genres = []
-        for album in self.user_albums.all():
-            genres.append(album.genre)
+        genres = [album.genre for album in self.user_albums.all()]
         count_list = Counter(genres).most_common(1)
         if len(count_list):
             return count_list[0][0].label

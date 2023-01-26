@@ -1,7 +1,7 @@
 # Welcome to Discotify!
 
-Discotify is my frontend capstone project for NSS E-19.
-It was built with Javascript, react and Next.js.
+Discotify is my frontend capstone project for NSS E-19. I recently did a refactor to make it a full-stack application connected to a django back end.
+It was built with Javascript, react and Next.js on the front end, and Python/Django on the back end.
 
 My focus on this project was using external data to provide most of the functionality and have it be a very simple user-friendly flow through the app.
 
@@ -9,7 +9,16 @@ My focus on this project was using external data to provide most of the function
 
 There are two ways to set up this project locally. To get a local copy up and running follow these steps.
 
+This project uses Firebase for Google Authentication as well as 3 external APIs:
+* Spotify
+* BandsInTown
+* Youtube
+
+
+
 ### Installation Using Docker
+
+```git clone git@github.com:Justin-Ferwerda/discotify-full-stack.git```
 
 
 

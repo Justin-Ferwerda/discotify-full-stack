@@ -7,32 +7,26 @@ My focus on this project was using external data to provide most of the function
 
 ## Getting Started
 
+In order to access all features of the app, you will need these API keys-
+
+  * [Spotify](https://developer.spotify.com/) - to get album and track info
+  * [Bands In Town](https://artists.bandsintown.com/support/api-installation) - for show data
+  * [Youtube](https://developers.google.com/youtube/v3) - to get videos for tracks 
+
+You will also need to utilize Firebase to enable Google Authentication.
+
+[Firebase Instructions](/Firebase.md)
+
+You will place your keys in a .env in the /discotify-full-stack/discotify folder.
+
+[Sample .env](/Discotify/public/images/sampleEnv.png)
+
+
 There are two ways to set up this project locally. To get a local copy up and running follow these steps.
-
-This project uses Firebase for Google Authentication as well as 3 external APIs:
-* Spotify
-* BandsInTown
-* Youtube
-
-
 
 ### Installation Using Docker
 
 ```git clone git@github.com:Justin-Ferwerda/discotify-full-stack.git```
-
-
-
-## The Data
-
-I used 3 external APIs to collect data for Discotify -
-
-  * [Spotify](https://developer.spotify.com/) - to get album and track info
-  * [Bands In Town](https://artists.bandsintown.com/support/api-installation) - for show data
-  * [Youtube](https://developers.google.com/youtube/v3) - to get videos for tracks
-
-
-The trickiest part of this process was each API had a different auth process to follow, so getting this set up took a fair amount of time at the beginning. Once I had my data formatted how I wanted, it was off to the races.
-
 
 ## Features
 

@@ -13,6 +13,8 @@ In order to access all features of the app, you will need these API keys-
   * [Bands In Town](https://artists.bandsintown.com/support/api-installation) - for show data
   * [Youtube](https://developers.google.com/youtube/v3) - to get videos for tracks 
 
+BandsinTown and Youtube API keys are optional, as they are only needed for a couple small features, but you will need the Spotify API credentials in order to use the app.
+
 You will also need to utilize Firebase to enable Google Authentication.
 
 [Firebase Instructions](/Firebase.md)

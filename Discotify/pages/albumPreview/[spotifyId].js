@@ -19,7 +19,6 @@ function AlbumPreview() {
 
   const setState = () => {
     getAlbums().then(setAlbums);
-    console.warn(albums);
   };
 
   const addWishlist = () => {

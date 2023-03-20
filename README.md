@@ -24,7 +24,7 @@ You will place your keys in a .env in the /discotify-full-stack/discotify folder
 [Sample .env](/Discotify/public/images/sampleEnv.png)
 
 
-There are two ways to set up this project locally. To get a local copy up and running follow one of these sets of instructions.
+The easiest way to get this project running locally is to utilize the Docker containerization I have done.
 
 [Installation using Docker](/DockerInstallation.md)
 
